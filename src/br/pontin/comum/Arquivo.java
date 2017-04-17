@@ -14,7 +14,7 @@ public class Arquivo implements Serializable  {
 	private long tamanho;
 
 	private String md5;
-	private Date dataHoraModificacao;
+	private Date dataHoraMod;
 
 	
 // ARQUIVOS = "C:\\Arquivos";
@@ -60,11 +60,11 @@ public class Arquivo implements Serializable  {
 	}
 
 	public Date getDataHoraModificacao() {
-		return dataHoraModificacao;
+		return dataHoraMod;
 	}
 
 	public void setDataHoraModificacao(Date dataHoraModificacao) {
-		this.dataHoraModificacao = dataHoraModificacao;
+		this.dataHoraMod = dataHoraModificacao;
 	}
 	
 
@@ -81,7 +81,7 @@ public class Arquivo implements Serializable  {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((dataHoraModificacao == null) ? 0 : dataHoraModificacao.hashCode());
+		result = prime * result + ((dataHoraMod == null) ? 0 : dataHoraMod.hashCode());
 		result = prime * result + ((extensao == null) ? 0 : extensao.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((md5 == null) ? 0 : md5.hashCode());
@@ -100,10 +100,10 @@ public class Arquivo implements Serializable  {
 		if (getClass() != obj.getClass())
 			return false;
 		Arquivo other = (Arquivo) obj;
-		if (dataHoraModificacao == null) {
-			if (other.dataHoraModificacao != null)
+		if (dataHoraMod == null) {
+			if (other.dataHoraMod != null)
 				return false;
-		} else if (!dataHoraModificacao.equals(other.dataHoraModificacao))
+		} else if (!dataHoraMod.equals(other.dataHoraMod))
 			return false;
 		if (extensao == null) {
 			if (other.extensao != null)

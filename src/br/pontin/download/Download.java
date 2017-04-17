@@ -12,7 +12,7 @@ public class Download implements Serializable{
 	private String de;
 	private Status status;
 	private String nomeArquivo;
-	private byte [] dadosABaixar;
+	private byte [] dados_Baixar;
 	
 	public String getDe() {
 		return de;
@@ -36,10 +36,10 @@ public class Download implements Serializable{
 		return this;
 	}
 	public byte[] getDadosABaixar() {
-		return dadosABaixar;
+		return dados_Baixar;
 	}
 	public Download setDadosABaixar(byte[] dadosABaixar) {
-		this.dadosABaixar = dadosABaixar;
+		this.dados_Baixar = dadosABaixar;
 		return this;
 	}
 }

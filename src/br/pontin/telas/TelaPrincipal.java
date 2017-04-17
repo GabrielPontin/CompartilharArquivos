@@ -1,4 +1,4 @@
-package br.pontin.main;
+package br.pontin.telas;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -84,7 +84,7 @@ public class TelaPrincipal extends JFrame implements IServer{
 	private Registry registryS;
 	private Registry registryC;
 	private Cliente cliente;
-	private TableModelArquivo tableModelArquivo;
+	private ModelArquivo tableModelArquivo;
 
 	
 	public static int PORTA = 1818;
@@ -92,7 +92,7 @@ public class TelaPrincipal extends JFrame implements IServer{
 
 	private HashMap<String, Cliente> cliServer;
 	private HashMap<Cliente, List<Arquivo>> arquivos;
-	private JButton DesconectarCliente;
+	private JButton Desconectar;
 	private JButton btnPararServidor;
 	private JTextArea textAreaServer;
 	private JPanel panel;
@@ -101,7 +101,6 @@ public class TelaPrincipal extends JFrame implements IServer{
 	private JTextField txtNomeCliente;
 	private JTextField txtID;
 	private JLabel lblID;
-	private JTextField textField;
 	private Thread thread;
 	private JButton btnDownload;
 	private JTable tbDownloads;
@@ -147,7 +146,6 @@ public class TelaPrincipal extends JFrame implements IServer{
 		
 		txtIP = new JTextField();
 		txtIP.setToolTipText("\r\n");
-		txtIP.setText("127.0.0.1");
 	
 		GridBagConstraints gbc_txtIP = new GridBagConstraints();
 		gbc_txtIP.gridwidth = 2;
@@ -212,7 +210,6 @@ public class TelaPrincipal extends JFrame implements IServer{
 		contentPane.add(lblNome, gbc_lblNome);
 		
 		txtNomeCliente = new JTextField();
-		txtNomeCliente.setText("Rodrigo Hajime");
 		GridBagConstraints gbc_txtNomeCliente = new GridBagConstraints();
 		gbc_txtNomeCliente.gridwidth = 2;
 		gbc_txtNomeCliente.insets = new Insets(0, 0, 5, 5);
@@ -231,7 +228,6 @@ public class TelaPrincipal extends JFrame implements IServer{
 		contentPane.add(lblID, gbc_lblID);
 		
 		txtID = new JTextField();
-		txtID.setText("1");
 		GridBagConstraints gbc_txtID = new GridBagConstraints();
 		gbc_txtID.gridwidth = 2;
 		gbc_txtID.insets = new Insets(0, 0, 5, 5);
@@ -266,7 +262,6 @@ public class TelaPrincipal extends JFrame implements IServer{
 		contentPane.add(lblIpCliente, gbc_lblIpCliente);
 		
 		txtIpCliente = new JTextField();
-		txtIpCliente.setText("127.0.0.1");
 		GridBagConstraints gbc_txtIpCliente = new GridBagConstraints();
 		gbc_txtIpCliente.gridwidth = 2;
 		gbc_txtIpCliente.insets = new Insets(0, 0, 5, 5);
@@ -326,19 +321,10 @@ public class TelaPrincipal extends JFrame implements IServer{
 		gbc_comboBox.gridy = 3;
 		contentPane.add(comboBox, gbc_comboBox);
 		
-		textField = new JTextField();
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.gridwidth = 5;
-		gbc_textField.insets = new Insets(0, 0, 5, 0);
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.gridx = 4;
-		gbc_textField.gridy = 3;
-		contentPane.add(textField, gbc_textField);
-		textField.setColumns(10);
-		
-		lblConexoes = new JLabel("Conex\u00F5es ativas");
+		lblConexoes = new JLabel("Conectados");
 		lblConexoes.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_lblConexoes = new GridBagConstraints();
+		gbc_lblConexoes.anchor = GridBagConstraints.EAST;
 		gbc_lblConexoes.gridwidth = 9;
 		gbc_lblConexoes.insets = new Insets(0, 0, 5, 0);
 		gbc_lblConexoes.gridx = 0;
@@ -346,7 +332,7 @@ public class TelaPrincipal extends JFrame implements IServer{
 		contentPane.add(lblConexoes, gbc_lblConexoes);
 		
 		panel = new JPanel();
-		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Servidor Ativo", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Servidores", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridwidth = 9;
@@ -370,12 +356,13 @@ public class TelaPrincipal extends JFrame implements IServer{
 		gbc_textAreaServer.gridy = 0;
 		panel.add(textAreaServer, gbc_textAreaServer);
 		textAreaServer.setEditable(true);
-		textAreaServer.setBackground(SystemColor.activeCaption);
+		textAreaServer.setBackground(Color.LIGHT_GRAY);
 		
 		lblNewLabel = new JLabel("Transferencias");
 		lblNewLabel.setBackground(Color.LIGHT_GRAY);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 0);
 		gbc_lblNewLabel.gridwidth = 9;
 		gbc_lblNewLabel.gridx = 0;
@@ -433,6 +420,7 @@ public class TelaPrincipal extends JFrame implements IServer{
 		txtPesquisa.setColumns(10);
 		
 		btnDownload = new JButton("Download");
+		btnDownload.setBackground(Color.LIGHT_GRAY);
 		btnDownload.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Baixar();
@@ -446,15 +434,16 @@ public class TelaPrincipal extends JFrame implements IServer{
 		gbc_btnDownload.gridy = 10;
 		contentPane.add(btnDownload, gbc_btnDownload);
 		
-		DesconectarCliente = new JButton("Desconectar Cliente");
-		DesconectarCliente.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		Desconectar = new JButton("Desconectar");
+		Desconectar.setBackground(Color.LIGHT_GRAY);
+		Desconectar.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		GridBagConstraints gbc_DesconectarCliente = new GridBagConstraints();
 		gbc_DesconectarCliente.anchor = GridBagConstraints.EAST;
 		gbc_DesconectarCliente.fill = GridBagConstraints.VERTICAL;
 		gbc_DesconectarCliente.gridwidth = 5;
 		gbc_DesconectarCliente.gridx = 4;
 		gbc_DesconectarCliente.gridy = 10;
-		contentPane.add(DesconectarCliente, gbc_DesconectarCliente);
+		contentPane.add(Desconectar, gbc_DesconectarCliente);
 		
 		txtIP.requestFocusInWindow();
 	}
@@ -488,7 +477,7 @@ public class TelaPrincipal extends JFrame implements IServer{
 				escreva(new File(nome), bytes);
 				String bytesBaixado = Md5Util.getMD5Checksum("." + File.separatorChar + "shared" + File.separatorChar + nome);
 				if (a.getMd5().equals(bytesBaixado)) {
-					textAreaServer.append("Arquivo ìntegro baixado");
+					textAreaServer.append("Arquivo integro baixado");
 				} else {
 					textAreaServer.append("Arquivo corrompido baixado");
 				}
@@ -530,7 +519,6 @@ public class TelaPrincipal extends JFrame implements IServer{
 protected void capturarArquivo() {
 		
 		String nomeArquivo = (String) tbDownloads.getValueAt(tbDownloads.getSelectedRow(), 0);
-//		int id = (int) tbDownloads.getValueAt(tbDownloads.getSelectedRow(), 2);
 		String IP = (String) tbDownloads.getValueAt(tbDownloads.getSelectedRow(), 3);
 		int porta = (int) tbDownloads.getValueAt(tbDownloads.getSelectedRow(), 4);
 		
@@ -693,7 +681,7 @@ protected void capturarArquivo() {
 				long idProd = 0;
 				arq.setId(new Long(idProd ++));
 				arq.setNome(new Md5Util().getNome(file.getName()));
-				arq.setExtensao(new v().getExtension(file.getName()));
+				arq.setExtensao(new Md5Util().getExtension(file.getName()));
 				arq.setTamanho(file.getUsableSpace());
 				arq.setDataHoraModificacao(new Date(file.lastModified()));
 				arq.setPath(file.getPath());
@@ -799,7 +787,7 @@ protected void capturarArquivo() {
 	 */
 	protected void conectar() {
 		
-/*		String ip = txtIP.getText().trim();
+		String ip = txtIP.getText().trim();
 		if (!ip.matches("[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}")) {
 			JOptionPane.showMessageDialog(this, "Digite um endereco de IP válido!");
 			return;
@@ -827,7 +815,7 @@ protected void capturarArquivo() {
 		imprimir("Iniciando servidor..");
 		imprimir("..");
 		imprimir("Servidor iniciado com sucesso!");
-*/		
+		
 		try {
 			textAreaServer.append("Iniciando servidor\n");
 			if (serverS == null) {
@@ -861,10 +849,10 @@ protected void capturarArquivo() {
 
 	
 	@Override
-	public void publicarListaArquivos(Cliente c, List<Arquivo> lista) throws RemoteException {
-		if (arquivos.containsKey(c)) {
+	public void publicarListaArquivos(Cliente cliente, final List<Arquivo> lista) throws RemoteException {
+		if (arquivos.containsKey(cliente)) {
 			arquivos.entrySet().forEach(e -> {
-				if (e.getKey().equals(c)) {
+				if (e.getKey().equals(cliente)) {
 					e.setValue(lista);
 					textAreaServer.append("Lista de arquivos de " + e.getKey().getNome() + " foi atualizada...\n");
 				}

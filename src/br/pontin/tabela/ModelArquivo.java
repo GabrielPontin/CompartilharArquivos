@@ -87,5 +87,12 @@ public class ModelArquivo extends AbstractTableModel {
 		return null;
 
 	}
+
+
+
+	public String getNomeArquivoSelecionado(int selectedRow) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 

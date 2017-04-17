@@ -2,7 +2,7 @@ package br.pontin.download;
 
 public enum StatusDown {
 
-	TRANSFERIDO("Arquivo transferido com sucesso."),
+	CONCLUIDO("Arquivo transferido com sucesso."),
 	TRANSFERINDO("Transferencia em Andamento..."),
 	ERRO_AO_TRANSFERIR("Erro ao baixar arquivo.");
 	
