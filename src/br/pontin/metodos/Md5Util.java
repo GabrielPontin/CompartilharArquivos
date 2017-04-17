@@ -1,47 +1,106 @@
 package br.pontin.metodos;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.security.MessageDigest;
 
 public class Md5Util {
 
-	private static byte[] createChecksum(String filename) throws Exception {
-		InputStream fis = new FileInputStream(filename);
 
-		byte[] buffer = new byte[1024];
-		MessageDigest complete = MessageDigest.getInstance("MD5");
-		int numRead;
+		public String getExtension(String name) {
 
-		do {
-			numRead = fis.read(buffer);
-			if (numRead > 0) {
-				complete.update(buffer, 0, numRead);
+			String extension = "";
+
+			int i = name.lastIndexOf('.');
+			if (i > 0) {
+				extension = name.substring(i+1);
 			}
-		} while (numRead != -1);
 
-		fis.close();
-		return complete.digest();
-	}
-
-	public static String getMD5Checksum(String filename) {
-		byte[] b;
-		try {
-			b = createChecksum(filename);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
+			return extension;
 		}
-		String result = "";
 
-		for (int i = 0; i < b.length; i++) {
-			result += Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1);
+		public String getMD5(String path) {
+
+			InputStream fis;
+			try {
+				fis = new FileInputStream(path);
+
+				byte[] buffer = new byte[1024];
+				MessageDigest complete = MessageDigest.getInstance("MD5");
+				int numRead;
+
+				do {
+					numRead = fis.read(buffer);
+					if (numRead > 0) {
+						complete.update(buffer, 0, numRead);
+					}
+				} while (numRead != -1);
+
+				fis.close();
+
+
+				return getString(buffer);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return "";
 		}
-		return result;
-	}
 
-	public static void main(String args[]) {
+		private String getString(byte[] buffer) {
+			
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < buffer.length; i++) {
+				if ((0xff & buffer[i]) < 0x10) {
+					sb.append('0');
+				}
+				sb.append(Integer.toHexString(0xff & buffer[i]));
+			}
+			String md5 = sb.toString();
+			
+			return md5;
+		}
+
+		public String getNome(String nome) {
+
+			int pos = nome.lastIndexOf(".");
+			if (pos > 0) {
+				nome = nome.substring(0, pos);
+			}
+
+			return nome;
+		}
 		
-		String md5 = Md5Util.getMD5Checksum("bull.jpg");
-		System.out.println(md5);
+		public static byte[] createChecksum(String filename) throws Exception {
+			InputStream fis = new FileInputStream(filename);
 
+			byte[] buffer = new byte[1024];
+			MessageDigest complete = MessageDigest.getInstance("MD5");
+			int numRead;
+
+			do {
+				numRead = fis.read(buffer);
+				if (numRead > 0) {
+					complete.update(buffer, 0, numRead);
+				}
+			} while (numRead != -1);
+
+			fis.close();
+			return complete.digest();
+		}
+
+		public static String getMD5Checksum(String filename) {
+			byte[] b;
+			try {
+				b = createChecksum(filename);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+			String result = "";
+
+			for (int i = 0; i < b.length; i++) {
+				result += Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1);
+			}
+			return result;
+		}
 	}
-}

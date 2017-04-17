@@ -1,7 +1,5 @@
 package br.pontin.tabela;
 
-package br.pontin.tabela;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -61,10 +59,7 @@ public class ModelArquivo extends AbstractTableModel {
 		return mat[lineIndex][colunaIndex];
 	}
 
-//	public String getNomeArquivoSelecionado(int row){
-//		return nomes.get(row);
-//	}
-	
+
 	@Override
 	public String getColumnName(int cname) {
 		
@@ -79,7 +74,7 @@ public class ModelArquivo extends AbstractTableModel {
 		case 3: 
 			return "Porta";
 		case 4: 
-			return "Extens�o";
+			return "Extensao";
 		case 5: 
 			return "Path";
 		case 6: 
